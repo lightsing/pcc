@@ -1,0 +1,29 @@
+# keyword-token
+False
+None
+True
+and
+as
+assert
+break
+class
+continue
+def
+elif
+else
+except
+for
+from
+if
+import
+in
+not
+or
+pass
+raise
+return
+try
+while
+
+# non-keyword token
+INDENT
