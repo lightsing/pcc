@@ -1,45 +1,41 @@
 %{
-#include "pcc.h"
+#include "y.tab.h"
 
-#define Token(t)    printf("Token: %s\n", yytext);
+extern int yylval;
 %}
 
 %%
-False       { Token(TOKEN_False); }
-None        { Token(TOKEN_None); }
-True        { Token(TOKEN_True); }
-and         { Token(TOKEN_and); }
-as          { Token(TOKEN_as); }
-assert      { Token(TOKEN_assert); }
-break       { Token(TOKEN_break); }
-class       { Token(TOKEN_class); }
-continue    { Token(TOKEN_continue); }
-def         { Token(TOKEN_def); }
-elif        { Token(TOKEN_elif); }
-else        { Token(TOKEN_else); }
-except      { Token(TOKEN_except); }
-for         { Token(TOKEN_for); }
-from        { Token(TOKEN_from); }
-if          { Token(TOKEN_if); }
-import      { Token(TOKEN_import); }
-in          { Token(TOKEN_in); }
-not         { Token(TOKEN_not); }
-or          { Token(TOKEN_or); }
-pass        { Token(TOKEN_pass); }
-raise       { Token(TOKEN_raise); }
-return      { Token(TOKEN_return); }
-try         { Token(TOKEN_try); }
-while       { Token(TOKEN_while); }
+False       { return FALSE; }
+None        { return NONE; }
+True        { return TRUE; }
+and         { return AND; }
+as          { return AS; }
+assert      { return ASSERT; }
+break       { return BREAK; }
+class       { return CLASS; }
+continue    { return CONTINUE; }
+def         { return DEF; }
+elif        { return ELIF; }
+else        { return ELSE; }
+except      { return EXCEPT; }
+for         { return FOR; }
+from        { return FROM; }
+if          { return IF; }
+import      { return IMPORT; }
+in          { return IN; }
+not         { return NOT; }
+or          { return OR; }
+pass        { return PASS; }
+raise       { return RAISE; }
+return      { return RETURN; }
+try         { return TRY; }
+while       { return WHILE; }
 
-\n(" "{4}|\t)+        { Token(TOKEN_INDENT); }
+\n(" "{4}|\t)+  { return INDENT; }
 
-[a-zA-Z_][a-zA-Z0-9_]*    { printf("Identifier: %s\n", yytext); }
-" "|\t|\n {};
-. ECHO;
+[0-9]+          { yylval = atoi(yytext); return NUMBER; }
 
+[a-zA-Z_][a-zA-Z0-9_]*    { return IDENTIFIER; }
+[ \t\n] {};   /* ignore any space */
+.	{ return yytext[0]; }
 %%
-
-int main() {
-    yylex();
-    return 0;
-}
