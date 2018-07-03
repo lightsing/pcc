@@ -1,7 +1,7 @@
 %{
 #include "y.tab.h"
 #include "define.h"
-
+#include <string.h>
 
 struct token_queue token_head = {};
 struct indent_stack indent_head = {};
@@ -45,13 +45,9 @@ return      { return RETURN; }
 try         { return TRY; }
 while       { return WHILE; }
 
-\n(" "{4})+  { 
-    
-}
+\n(" "{4})+  { new_indent(strlen(yytext)/4); }
 
-\n\t+ {
-
-}
+\n\t+ { new_indent(strlen(yytext)); }
 
 [0-9]+          { yylval = atoi(yytext); return NUMBER; }
 

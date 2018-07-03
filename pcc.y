@@ -9,7 +9,7 @@ void yyerror(const char *s);
 %token DEF ELIF ELSE EXCEPT FOR FROM IF IMPORT IN
 %token NOT OR PASS RAISE RETURN TRY WHILE
 /* non-keywords token */
-%token INDENT
+%token INDENT DEDENT
 /* constants */
 %token NUMBER
 %token IDENTIFIER
