@@ -33,6 +33,12 @@ struct indent_entry {
 };
 extern struct indent_stack indent_head;
 int new_indent(int level) {
+    if (SLIST_EMPTY(&indent_head)) {
+        /* initialize the stack, it SHOULD NOT be empty */
+        struct indent_entry *zero_indent = (struct indent_entry*)malloc(sizeof(struct indent_entry));
+        zero_indent->level = 0;
+        SLIST_INSERT_HEAD(&indent_head, zero_indent, entries);
+    }
     struct indent_entry *n = SLIST_FIRST(&indent_head);
     if (level == n->level) return 0;
 
